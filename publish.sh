@@ -6,6 +6,10 @@ cd "$(dirname "$0")"
 
 MSG="${1:-Update newsroom}"
 
+# The cloud routine also pushes to this repo - always sync down first
+# so local edits land on top of the latest published state.
+git pull --rebase --autostash origin main
+
 python3 tools/validate.py
 python3 tools/build_preview.py
 
