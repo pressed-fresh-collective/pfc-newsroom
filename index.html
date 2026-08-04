@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>PFC Newsroom — live preview</title>
+<style>
+  body { margin: 0; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; background: #fff; }
+  .preview-note { background: #614DFF; color: #fff; font-size: 13px; padding: 8px 16px; text-align: center; }
+  .preview-wrap { padding: 28px 20px 60px; }
+</style>
+</head>
+<body>
+<div class="preview-note">Preview of the PFC newsroom — the live page is on pressedfreshcollective.com</div>
+<div class="preview-wrap">
+<!-- ============================================================
+  Pressed Fresh Collective — Newsroom (code block, v2)
+  Data + images are served from the pfc-newsroom GitHub Pages site.
+  Paste this whole block into a Squarespace Code Block (HTML mode)
+  ONCE. New releases publish automatically when the repo updates —
+  no Squarespace edits ever needed again.
+  DATA_URL below must point at the GitHub Pages copy of
+  pfc-newsroom-data.js (setup.sh fills this in).
+============================================================= -->
+<div id="pfc-newsroom" aria-live="polite"><p style="color:#888;font-size:14px">Loading press releases&hellip;</p></div>
+
+<style>
+#pfc-newsroom { font-family: inherit; color: #1a1a1a; max-width: 1080px; margin: 0 auto; }
+#pfc-newsroom * { box-sizing: border-box; }
+#pfc-newsroom img { max-width: 100%; height: auto; display: block; }
+#pfc-newsroom a { color: #614DFF; }
+
+/* ---- list view ---- */
+.pfcn-toolbar { display: flex; gap: 14px; align-items: center; padding: 4px 0 22px; }
+.pfcn-search { flex: 1; max-width: 420px; padding: 11px 16px; border: 1px solid #d9d9e3; border-radius: 999px; font-size: 15px; font-family: inherit; background: #fff; color: #1a1a1a; }
+.pfcn-search:focus { outline: 2px solid #614DFF; border-color: transparent; }
+.pfcn-count { font-size: 13.5px; color: #888; }
+.pfcn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; padding: 8px 0 8px; }
+.pfcn-card { border: 1px solid #e8e8ee; border-radius: 14px; overflow: hidden; background: #fff; cursor: pointer; transition: box-shadow .2s ease, transform .2s ease; display: flex; flex-direction: column; }
+.pfcn-card:hover { box-shadow: 0 10px 30px rgba(20,15,60,.12); transform: translateY(-3px); }
+.pfcn-card-img { aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: #ece9f8; }
+.pfcn-card-body { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.pfcn-date { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #777; }
+.pfcn-card h3 { margin: 0; font-size: 19px; line-height: 1.35; color: #1a1a1a; }
+.pfcn-card p { margin: 0; font-size: 14.5px; line-height: 1.55; color: #555; }
+.pfcn-more { margin-top: auto; font-size: 13.5px; font-weight: 600; color: #614DFF; }
+.pfcn-loadmore { display: block; margin: 34px auto 40px; padding: 13px 40px; border-radius: 999px; border: 1px solid #614DFF; background: none; color: #614DFF; font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer; }
+.pfcn-loadmore:hover { background: #614DFF; color: #fff; }
+.pfcn-empty { padding: 40px 0 60px; color: #888; font-size: 15px; }
+
+/* ---- article view ---- */
+.pfcn-article { max-width: 760px; margin: 0 auto; padding-bottom: 48px; }
+.pfcn-back { display: inline-block; margin: 4px 0 22px; font-size: 14px; font-weight: 600; text-decoration: none; }
+.pfcn-back:hover { text-decoration: underline; }
+.pfcn-hero { border-radius: 14px; overflow: hidden; margin-bottom: 26px; }
+.pfcn-article h1 { font-size: clamp(26px, 4vw, 36px); line-height: 1.2; margin: 0 0 10px; color: #1a1a1a; }
+.pfcn-lead { font-size: 19px; line-height: 1.5; color: #444; font-weight: 500; margin: 18px 0; }
+.pfcn-article h2 { font-size: 24px; margin: 34px 0 8px; color: #1a1a1a; }
+.pfcn-body p { font-size: 16.5px; line-height: 1.7; margin: 16px 0; color: #2a2a2a; }
+.pfcn-body ul { font-size: 16.5px; line-height: 1.7; color: #2a2a2a; margin: 16px 0; padding-left: 24px; }
+.pfcn-body hr { border: none; border-top: 1px solid #e4e4ea; margin: 32px 0; }
+.pfcn-body table { border-collapse: collapse; width: 100%; font-size: 15px; margin: 20px 0; }
+.pfcn-body td, .pfcn-body th { border: 1px solid #e4e4ea; padding: 8px 12px; text-align: left; }
+.pfcn-caption { font-size: 13px; color: #888; margin: -8px 0 20px; }
+.pfcn-figure { margin: 26px 0 10px; border-radius: 10px; overflow: hidden; cursor: zoom-in; }
+blockquote.pfcn-quote { margin: 30px 0; padding: 6px 0 6px 22px; border-left: 4px solid #614DFF; font-size: 19px; line-height: 1.55; font-style: italic; color: #333; }
+blockquote.pfcn-quote footer { margin-top: 10px; font-size: 13.5px; font-style: normal; letter-spacing: .06em; text-transform: uppercase; color: #777; }
+.pfcn-btn { display: inline-block; padding: 13px 34px; border-radius: 999px; color: #fff !important; font-weight: 600; font-size: 15px; text-decoration: none; margin: 10px 0; }
+.pfcn-btn:hover { filter: brightness(1.1); }
+.pfcn-embed { margin: 26px 0; }
+.pfcn-embed iframe { width: 100%; border: 0; border-radius: 12px; }
+.pfcn-embed--video { position: relative; padding-top: 56.25%; border-radius: 12px; overflow: hidden; }
+.pfcn-embed--video iframe { position: absolute; inset: 0; height: 100%; border-radius: 0; }
+.pfcn-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin: 26px 0 10px; }
+.pfcn-gallery img { border-radius: 8px; aspect-ratio: 1; object-fit: cover; cursor: zoom-in; width: 100%; }
+.pfcn-ig { display: flex; align-items: center; gap: 14px; border: 1px solid #e8e8ee; border-radius: 12px; padding: 16px 20px; margin: 26px 0; }
+.pfcn-ig a { font-weight: 600; text-decoration: none; }
+.pfcn-linkcard { display: flex; gap: 0; border: 1px solid #e8e8ee; border-radius: 12px; overflow: hidden; margin: 26px 0; text-decoration: none; color: inherit; }
+.pfcn-linkcard:hover { box-shadow: 0 6px 20px rgba(20,15,60,.10); }
+.pfcn-linkcard-img { flex: 0 0 180px; background-size: cover; background-position: center; background-color: #ece9f8; min-height: 110px; }
+.pfcn-linkcard-text { padding: 16px 20px; }
+.pfcn-linkcard-text strong { display: block; font-size: 15.5px; line-height: 1.4; color: #1a1a1a; margin-bottom: 6px; }
+.pfcn-linkcard-text span { font-size: 13.5px; color: #777; line-height: 1.5; display: block; }
+.pfcn-linkcard-text em { font-size: 12.5px; color: #614DFF; font-style: normal; font-weight: 600; }
+.pfcn-contact { margin-top: 44px; border-top: 1px solid #e4e4ea; padding-top: 26px; }
+.pfcn-contact h4 { margin: 0 0 8px; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: #777; }
+.pfcn-contact p { margin: 2px 0; font-size: 15.5px; }
+
+/* ---- lightbox ---- */
+.pfcn-lightbox { position: fixed; inset: 0; background: rgba(10,8,25,.92); display: flex; align-items: center; justify-content: center; z-index: 99999; cursor: zoom-out; padding: 4vh 4vw; }
+.pfcn-lightbox img { max-width: 100%; max-height: 92vh; width: auto; height: auto; border-radius: 6px; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+.pfcn-lightbox-close { position: absolute; top: 18px; right: 26px; color: #fff; font-size: 34px; line-height: 1; cursor: pointer; background: none; border: none; }
+
+@media (max-width: 640px) {
+  .pfcn-grid { grid-template-columns: 1fr; gap: 20px; }
+  .pfcn-linkcard { flex-direction: column; }
+  .pfcn-linkcard-img { flex-basis: auto; height: 160px; }
+}
+</style>
+
+<script>
+(function () {
+  var DATA_URL = './pfc-newsroom-data.js';
+  var ASSET_BASE = DATA_URL.slice(0, DATA_URL.lastIndexOf('/') + 1);
+  var PAGE_SIZE = 24;
+
+  // Resolve repo-relative image paths (e.g. "images/2026080301/hero.jpg")
+  // against wherever the data file is hosted. Absolute URLs pass through.
+  function res(u) {
+    if (!u) return u;
+    return /^(https?:|data:|\/\/|\/)/.test(u) ? u : ASSET_BASE + u;
+  }
+
+  var RELEASES = [];
+  var shown = PAGE_SIZE;
+  var query = '';
+  var root = document.getElementById('pfc-newsroom');
+  var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  function fmtDate(iso) {
+    var p = iso.split('-');
+    return parseInt(p[2], 10) + ' ' + MONTHS[parseInt(p[1], 10) - 1] + ' ' + p[0];
+  }
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function findRelease(hash) {
+    var m = /pfc-press=(\d+)/.exec(hash);
+    if (!m) return null;
+    for (var i = 0; i < RELEASES.length; i++) if (RELEASES[i].id === m[1]) return RELEASES[i];
+    return null;
+  }
+  function filtered() {
+    if (!query) return RELEASES;
+    var q = query.toLowerCase();
+    return RELEASES.filter(function (r) {
+      return (r.title + ' ' + r.lead).toLowerCase().indexOf(q) > -1;
+    });
+  }
+
+  function renderList(keepScroll) {
+    var list = filtered();
+    var h = '<div class="pfcn-toolbar">'
+      + '<input class="pfcn-search" type="search" placeholder="Search releases&hellip;" value="' + esc(query) + '" aria-label="Search press releases">'
+      + '<span class="pfcn-count">' + list.length + ' release' + (list.length === 1 ? '' : 's') + '</span>'
+      + '</div>';
+    if (!list.length) {
+      h += '<p class="pfcn-empty">No releases match your search.</p>';
+    } else {
+      h += '<div class="pfcn-grid">';
+      list.slice(0, shown).forEach(function (r) {
+        h += '<article class="pfcn-card" data-id="' + r.id + '" tabindex="0" role="link" aria-label="' + esc(r.title) + '">'
+          + '<div class="pfcn-card-img" data-bg="' + res(r.hero) + '"></div>'
+          + '<div class="pfcn-card-body">'
+          + '<span class="pfcn-date">' + fmtDate(r.date) + '</span>'
+          + '<h3>' + esc(r.title) + '</h3>'
+          + '<p>' + esc(r.lead) + '</p>'
+          + '<span class="pfcn-more">Read the release &rsaquo;</span>'
+          + '</div></article>';
+      });
+      h += '</div>';
+      if (list.length > shown) h += '<button class="pfcn-loadmore" type="button">Show more releases</button>';
+    }
+    root.innerHTML = h;
+    lazyBackgrounds();
+    var inp = root.querySelector('.pfcn-search');
+    inp.addEventListener('input', function () {
+      query = inp.value;
+      shown = PAGE_SIZE;
+      var pos = window.scrollY;
+      renderList();
+      root.querySelector('.pfcn-search').focus();
+      var ni = root.querySelector('.pfcn-search');
+      ni.setSelectionRange(ni.value.length, ni.value.length);
+      window.scrollTo(0, pos);
+    });
+  }
+
+  var bgObserver = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) {
+        en.target.style.backgroundImage = "url('" + en.target.getAttribute('data-bg') + "')";
+        bgObserver.unobserve(en.target);
+      }
+    });
+  }, { rootMargin: '300px' }) : null;
+
+  function lazyBackgrounds() {
+    root.querySelectorAll('.pfcn-card-img[data-bg]').forEach(function (el) {
+      if (bgObserver) bgObserver.observe(el);
+      else el.style.backgroundImage = "url('" + el.getAttribute('data-bg') + "')";
+    });
+  }
+
+  function blockHtml(b) {
+    switch (b.t) {
+      case 'lead': return '<p class="pfcn-lead">' + b.html + '</p>';
+      case 'p': return '<p>' + b.html + '</p>';
+      case 'h2': case 'h3': return '<h2>' + b.html + '</h2>';
+      case 'hr': return '<hr>';
+      case 'caption': return '<p class="pfcn-caption">' + b.html + '</p>';
+      case 'table': return '<div style="overflow-x:auto">' + b.html + '</div>';
+      case 'list':
+        return '<ul>' + b.items.map(function (it) { return '<li>' + it + '</li>'; }).join('') + '</ul>';
+      case 'quote':
+        return '<blockquote class="pfcn-quote">' + b.html
+          + (b.cite ? '<footer>' + esc(b.cite) + '</footer>' : '') + '</blockquote>';
+      case 'button':
+        return '<p><a class="pfcn-btn" style="background-color:' + b.color + '" href="' + b.href + '" target="_blank" rel="noopener">' + esc(b.label) + '</a></p>';
+      case 'img':
+        return '<figure class="pfcn-figure" style="margin-left:0;margin-right:0"><img loading="lazy" src="' + res(b.src) + '" alt="' + esc(b.alt) + '" data-full="' + res(b.src) + '"></figure>'
+          + (b.alt ? '<p class="pfcn-caption">' + esc(b.alt) + '</p>' : '');
+      case 'embed':
+        if (b.src.indexOf('youtube') > -1 || b.src.indexOf('youtu.be') > -1) {
+          var vsrc = b.src.replace('https://youtube.com/', 'https://www.youtube.com/');
+          return '<div class="pfcn-embed pfcn-embed--video"><iframe loading="lazy" src="' + vsrc + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Video"></iframe></div>';
+        }
+        return '<div class="pfcn-embed"><iframe loading="lazy" src="' + b.src + '" height="' + (b.height || 352) + '" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Embedded media"></iframe></div>';
+      case 'gallery':
+        var g = '<div class="pfcn-gallery">';
+        b.items.forEach(function (it) {
+          g += '<img loading="lazy" src="' + res(it.thumb) + '" alt="' + esc(it.alt) + '" data-full="' + res(it.full) + '">';
+        });
+        return g + '</div>';
+      case 'instagram':
+        var igLabel = b.post
+          ? '<a href="' + b.href + '" target="_blank" rel="noopener">View this post on Instagram</a>'
+          : 'Follow <a href="' + b.href + '" target="_blank" rel="noopener">' + esc(b.handle) + '</a> on Instagram';
+        return '<div class="pfcn-ig"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#614DFF" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.6" cy="6.4" r="1.3" fill="#614DFF" stroke="none"/></svg>'
+          + '<span>' + igLabel + '</span></div>';
+      case 'tiktok':
+        return '<div class="pfcn-ig"><svg width="24" height="24" viewBox="0 0 24 24" fill="#614DFF" aria-hidden="true"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 1 1-2.59-2.59c.27 0 .53.04.77.12V9.75a5.76 5.76 0 0 0-.77-.05 5.66 5.66 0 1 0 5.66 5.66V9.01a7.36 7.36 0 0 0 4.3 1.38V7.3a4.34 4.34 0 0 1-3.22-1.48z"/></svg>'
+          + '<span>Watch <a href="' + b.href + '" target="_blank" rel="noopener">' + esc(b.handle) + ' on TikTok</a></span></div>';
+      case 'linkcard':
+        return '<a class="pfcn-linkcard" href="' + b.href + '" target="_blank" rel="noopener">'
+          + (b.img ? '<div class="pfcn-linkcard-img" style="background-image:url(\'' + res(b.img) + '\')"></div>' : '')
+          + '<div class="pfcn-linkcard-text"><strong>' + esc(b.title) + '</strong>'
+          + (b.desc ? '<span>' + esc(b.desc) + '</span>' : '')
+          + '<em>Read more &rsaquo;</em></div></a>';
+      default: return '';
+    }
+  }
+
+  function renderArticle(r) {
+    var h = '<div class="pfcn-article">'
+      + '<a class="pfcn-back" href="#" data-back>&lsaquo; All press releases</a>'
+      + '<div class="pfcn-hero"><img src="' + res(r.hero) + '" alt="' + esc(r.title) + '"></div>'
+      + '<span class="pfcn-date">' + fmtDate(r.date) + '</span>'
+      + '<h1>' + esc(r.title) + '</h1>'
+      + '<div class="pfcn-body">';
+    r.blocks.forEach(function (b) { h += blockHtml(b); });
+    h += '</div>';
+    if (r.contact) {
+      h += '<div class="pfcn-contact"><h4>Media Contact</h4><p><strong>' + esc(r.contact.name) + '</strong>'
+        + (r.contact.role ? ' &middot; ' + esc(r.contact.role) : '') + '</p>'
+        + (r.contact.email ? '<p><a href="mailto:' + r.contact.email + '">' + r.contact.email + '</a></p>' : '')
+        + (r.contact.phone ? '<p>' + esc(r.contact.phone) + '</p>' : '');
+      h += '</div>';
+    }
+    h += '</div>';
+    root.innerHTML = h;
+  }
+
+  function openLightbox(src, alt) {
+    var lb = document.createElement('div');
+    lb.className = 'pfcn-lightbox';
+    lb.innerHTML = '<button class="pfcn-lightbox-close" aria-label="Close">&times;</button><img src="' + src + '" alt="' + esc(alt || '') + '">';
+    lb.addEventListener('click', function () { lb.remove(); });
+    document.body.appendChild(lb);
+  }
+
+  function route() {
+    var r = findRelease(location.hash);
+    if (r) { renderArticle(r); root.scrollIntoView({ behavior: 'instant', block: 'start' }); }
+    else renderList();
+  }
+
+  root.addEventListener('click', function (e) {
+    var card = e.target.closest('.pfcn-card');
+    if (card) { location.hash = 'pfc-press=' + card.getAttribute('data-id'); return; }
+    if (e.target.closest('[data-back]')) {
+      e.preventDefault();
+      history.pushState('', document.title, location.pathname + location.search);
+      route();
+      return;
+    }
+    if (e.target.closest('.pfcn-loadmore')) { shown += PAGE_SIZE; renderList(); return; }
+    var img = e.target.closest('img[data-full]');
+    if (img) openLightbox(img.getAttribute('data-full'), img.getAttribute('alt'));
+  });
+  root.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      var card = e.target.closest('.pfcn-card');
+      if (card) location.hash = 'pfc-press=' + card.getAttribute('data-id');
+    }
+  });
+  window.addEventListener('hashchange', route);
+
+  var loader = document.createElement('script');
+  loader.src = DATA_URL;
+  loader.onload = function () {
+    if (window.PFC_RELEASES && window.PFC_RELEASES.length) {
+      RELEASES = window.PFC_RELEASES;
+      route();
+    } else {
+      showLoadError('the file loaded but contained no releases');
+    }
+  };
+  loader.onerror = function () { showLoadError('the file could not be loaded'); };
+  document.head.appendChild(loader);
+
+  function showLoadError(why) {
+    root.innerHTML = '<p style="color:#b00;font-size:15px">Could not load press release data: ' + why + '.<br>'
+      + 'Check that the GitHub Pages site is live and DATA_URL in the code block points to pfc-newsroom-data.js there.</p>';
+  }
+})();
+</script>
+</div>
+</body>
+</html>
