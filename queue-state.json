@@ -2,6 +2,6 @@
   "processedFolders": [
     "Stephen Thomas-Stephen Thomas Creates Unforgettable West Virginia Performance Celebrating Legacy, Community, and DJ Unk-update-2026-08-05 -v2"
   ],
-  "lastSlackTs": "1785962045.000000",
-  "note": "lastSlackTs initialized 2026-08-05 to just before the pending CHANGE request (ts 1785962045.858929) so it gets processed on the next run. v1 Slack-timestamp state retired 2026-08-03; lastProcessedTs was 1785795797.767599. Everything published up to and including ids 2026080301-06 is already in pfc-newsroom-data.js."
+  "lastSlackTs": "1785962045.858929",
+  "note": "lastSlackTs advanced 2026-08-06: the 2026-08-05 CHANGE request (ts 1785962045.858929) was applied manually by Dawn's local Claude session because scheduled runs were not processing it. v1 state retired 2026-08-03."
 }
