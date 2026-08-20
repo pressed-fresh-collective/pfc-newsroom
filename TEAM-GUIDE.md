@@ -1,72 +1,79 @@
 # PFC Newsroom: How to Publish and Update Press Releases
 
-Our newsroom on pressedfreshcollective.com now updates itself. Nobody
-logs into Squarespace, nobody uploads files to the website, and nobody
-waits on a handoff. Here is everything you need to know.
-
-The newsroom robot checks for new work every hour, Monday to Friday,
-9am to 5pm Denver time.
+Publishing a press release is now one conversation with Claude. There is
+no more Drive handoff folder, no more hourly robot, and no waiting — you
+upload, Claude publishes, done. Nobody logs into Squarespace, ever.
 
 ## Publishing a new press release
 
-1. Open the Google Drive folder **PFC Newsroom Handoff > incoming**
-2. Create one folder for the release, named with the date first:
-   `2026-08-10-artist-name-song-title`
-3. Put two things in it:
-   - The final press release document (copy must be final; the robot
-     publishes it word for word and never rewrites)
-   - Every image, with the main image named `hero` (hero.jpg or
-     hero.png)
-4. Done. Within the hour, the robot formats it, publishes it, and
-   posts the link in **#newsroom-queue** so everyone knows it is live.
+1. Open Claude in our team workspace and start a new chat (a Claude
+   Code session connected to the `pfc-newsroom` repo is the reliable
+   way — bookmark it once and reuse it).
+2. Upload the **final** press release document and **every image** —
+   the actual files, with the main image named `hero` (hero.jpg or
+   hero.png).
+3. Say: **"Add this to the newsroom."** Include one thing in your
+   message: **the music release date** — the day the single/EP/album
+   goes live on streaming. If the music is already out, paste the
+   Spotify and Apple Music links instead.
+4. Claude formats the entry, publishes it, posts the live link in
+   **#newsroom-queue**, and gives you the link directly. The website
+   shows it about 10 minutes later.
 
-The release appears on the website about 10 minutes after the robot
-posts the link.
+The copy must be final. Claude publishes it word for word and never
+rewrites it (the one exception: em dashes get swapped out, house
+style — Claude will tell you about every swap). Still drafting? Ask
+Claude to help with the press release first, then publish.
 
-If something is missing (no final copy, no hero image), the robot will
-not publish. Instead it posts in #newsroom-queue telling you exactly
-what it needs. After you fix the folder, rename it with `-v2` on the
-end so the robot looks at it again.
+## The Listen Now link (automatic)
 
-**Embargoed releases:** just mention the embargo date in the document.
-The robot holds the release and publishes it automatically once the
-date arrives.
+If the music isn't out yet when you publish, you don't need to do
+anything. On release morning, a scheduled Claude task finds the release
+on Spotify and Apple Music, adds the LISTEN NOW buttons and the Spotify
+player to the press release, and posts a confirmation in
+#newsroom-queue — usually by 7am Denver time. If it can't find the
+release after a few days, it asks for help in #newsroom-queue; just
+reply-thread the correct link and ask Claude in a chat to add it.
 
 ## Fixing or updating a published release
 
-**For any text change, just ask in #newsroom-queue.** Start your
-message with UPDATE (or FIX, CHANGE, REMOVE) and name the artist or
-release. Examples:
+Same as publishing: open a Claude chat and ask. Be specific about which
+release you mean:
 
-> UPDATE: Rob Carranza "Money" release, the Spotify link should be
-> [new link]
+> Update the newsroom: on the Rob Carranza "Money" release, the Spotify
+> link should be [new link]
 
-> FIX: typo in the Stephen Thomas release, "Woody Fest" should be
+> Fix a typo in the Stephen Thomas release: "Woody Fest" should be
 > "Woodie Fest"
 
-> REMOVE: take down the Hallie Marie release
+> Take down the Hallie Marie release
 
-The robot applies the change, replies in your thread confirming
-exactly what it changed, and the site updates about 10 minutes later.
-If it is not sure which release you mean, it will ask in the thread
-before touching anything.
+Claude makes exactly the change, confirms exactly what it changed, and
+the site updates about 10 minutes later. If it isn't sure which release
+you mean, it asks first. New or replacement images work the same way —
+upload the file in the chat and say what to swap.
 
-**For a new or replacement image**, Slack cannot deliver the file to
-the robot, so use Drive: drop a folder in **incoming** named
-`artist-title-update-2026-08-10` containing the new image(s) and a
-short note saying what to swap. The robot handles the rest.
+Note: posting UPDATE/FIX messages in #newsroom-queue no longer
+publishes anything — the robot that watched that channel is retired.
+The channel is still where publish confirmations land, so keep an eye
+on it.
+
+## Embargoed releases
+
+There is no holding queue anymore, and publishing is public
+immediately. **Hold embargoed releases yourself and publish them on the
+embargo day.** If your document mentions a future embargo date, Claude
+will stop and remind you rather than publish early.
 
 ## Please do not
 
 - Edit anything on the Squarespace site. The newsroom updates itself;
   editing the page can break it.
-- Edit or replace files in the PFC Newsroom Handoff folder outside of
-  the incoming folder.
-- Assume something failed if the site has not changed yet. The robot
-  runs hourly and the site takes about 10 minutes to refresh after it
-  confirms in Slack.
+- Publish copy that isn't final.
+- Assume something failed if the site hasn't changed yet — it takes
+  about 10 minutes after Claude confirms.
 
 ## If something looks wrong
 
-Tell Dawn. Every change the robot makes is recorded and reversible, so
-nothing is ever lost or unfixable.
+Tell Dawn. Every change is a recorded commit and reversible, so nothing
+is ever lost or unfixable.

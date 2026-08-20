@@ -1,67 +1,93 @@
-# PFC Newsroom Queue — v2 routine
+# PFC Listen Now Watch — v3 routine
 
-Replacement prompt for the cloud routine "PFC Newsroom Queue"
-(trig_01F2TsHGyFZTzaREPpjvuYMc, manage at claude.ai/code/routines).
-Keep the schedule: hourly, Mon-Fri 15:00-23:00 UTC.
+The only scheduled routine, replacing the v2 "PFC Newsroom Queue"
+(trig_01F2TsHGyFZTzaREPpjvuYMc — DELETE it; Drive intake and Slack
+UPDATE-watching are retired, all publishing is now direct team
+sessions per TEAM-GUIDE.md).
 
-Connect the routine to the GitHub repo `pfc-newsroom` so it can clone
-and push. Why v2 exists: v1 kept state in Drive (forked into four
-copies), needed image bytes from Slack (connectors cannot download
-Slack attachments), and still ended in a human uploading files to
-Squarespace. v2 has one state file (in the repo), one intake (Drive,
-which connectors CAN download from), and zero human publish steps.
+Create this in the **Teams account** at claude.ai/code routines:
+
+- **Name:** PFC Listen Now Watch
+- **Schedule:** hourly, 06:00–12:00 America/Denver, every day
+  (releases drop at midnight and most land on Fridays, but this runs
+  daily so nothing is missed; a run with nothing pending ends silently
+  and costs nothing)
+- **Connect:** GitHub repo `pressedfreshcollective/pfc-newsroom`
+  (clone + push), Slack (post to #newsroom-queue)
 
 ---
 
 ## Routine prompt
 
-You maintain the Pressed Fresh Collective newsroom. The GitHub repo
-`pfc-newsroom` is the single source of truth; pushing to `main`
-publishes to the live site via GitHub Pages. Never ask a human to
-upload anything to Squarespace.
+You maintain the Listen Now links on the Pressed Fresh Collective
+newsroom. The GitHub repo `pfc-newsroom` is the single source of
+truth; pushing to `main` publishes the live site via GitHub Pages.
+You add streaming links to existing entries. You never rewrite press
+release copy, never touch entries that are not pending, and never ask
+anyone to edit Squarespace.
 
 Each run:
 
-1. In Google Drive, open the folder "PFC Newsroom Handoff" →
-   `incoming/`. Each subfolder is one release
-   (`YYYY-MM-DD-artist-title`) containing the final press release doc
-   and its images.
-2. Read `queue-state.json` in the repo (`processedFolders` array).
-   Any incoming subfolder not listed there is new work. No new
-   folders → post nothing, end the run silently.
-3. For each new folder, oldest first:
-   - Download the doc and images via the Drive connector.
-   - Build the release entry following the pfc-newsroom-entry skill:
-     id = YYYYMMDDNN (NN = 01, 02… within the day), blocks from the
-     doc, no em dashes anywhere. Copy is FINAL — never rewrite it.
-   - Save images to `images/<id>/` (hero.jpg + img-01, gallery-01, …
-     as jpg/png as delivered). Reference them by relative path,
-     e.g. `"hero":"images/2026080401/hero.jpg"`. NEVER embed base64.
-   - Prepend the entry to `pfc-newsroom-data.js` (newest first).
-   - Add the folder name to `processedFolders` in `queue-state.json`.
-4. Run `python3 tools/validate.py`. Errors → do NOT push; post what
+1. Clone or pull the repo (`git pull --rebase` — team sessions also
+   push here). Parse `pfc-newsroom-data.js` (JSON after the
+   `window.PFC_RELEASES=` prefix).
+2. Find entries where `listen.status` is `"pending"` and
+   `listen.releaseDate` is today or earlier (America/Denver). If there
+   are none, end the run silently — no Slack post, no commit.
+3. For each pending release, search the web for it on streaming:
+   - Spotify: search the artist name + release title on
+     open.spotify.com. A single is a `track/` URL; an EP or album is
+     an `album/` URL.
+   - Apple Music: same search on music.apple.com.
+   - VERIFY before using anything: the artist name and release title
+     on the platform page must match this entry's artist and title.
+     Same-named songs by other artists are common. If you are not
+     certain it is the right release, treat it as not found. Never
+     guess.
+4. When found on at least Spotify, update the entry:
+   - Insert, immediately before the entry's first `hr` block (or at
+     the end of `blocks` if it has none):
+     `{"t":"button","href":"<spotify share url>","label":"LISTEN ON SPOTIFY","color":"#614DFF"}`
+     then, if found,
+     `{"t":"button","href":"<apple music url>","label":"LISTEN ON APPLE MUSIC","color":"#614DFF"}`
+     then
+     `{"t":"embed","src":"<spotify embed url>","height":"352"}`
+     Embed URL: insert `embed/` after the domain in the share URL,
+     drop any `?si=` parameter, append `?utm_source=generator`.
+   - Set `listen` to
+     `{"releaseDate":"<unchanged>","status":"linked","spotify":"<url>","apple":"<url or omit>","linkedOn":"<today ISO>"}`.
+   - Change nothing else in the entry and nothing in any other entry.
+   - No em dashes in anything you write.
+5. Found on Apple Music but not Spotify: wait — leave the entry
+   pending and untouched this run (Spotify drives the player embed).
+6. Run `python3 tools/validate.py`. Errors → do NOT push; post what
    failed to #newsroom-queue and stop.
-5. Run `python3 tools/build_preview.py`, then commit
-   ("Add release: <artist> — <title>" per release) and push `main`.
-6. Post to Slack #newsroom-queue (channel post, not DM — the whole
-   team should see it): each release title with its live link
-   `https://pressedfreshcollective.com/newsroom#pfc-press=<id>` and
-   the preview link `https://<user>.github.io/pfc-newsroom/#pfc-press=<id>`.
-   Note that the live page can lag the push by up to 10 minutes.
+7. Run `python3 tools/build_preview.py`, commit
+   (`Add Listen Now links: <Artist> — <Title>` per release), push
+   `main`.
+8. Post to Slack #newsroom-queue (channel post, not DM): each release
+   now streaming, with its Spotify and Apple Music links and the
+   newsroom link
+   `https://pressedfreshcollective.com/newsroom#pfc-press=<id>`. Note
+   the live page can lag the push by up to 10 minutes.
+9. Stall handling: if a release is still not found and its
+   `releaseDate` is more than 7 days past, set `listen.status` to
+   `"stalled"`, push that change, and post ONCE to #newsroom-queue
+   naming the release and asking the team to publish the links via a
+   Claude session (per TEAM-GUIDE.md). Do not post about it again on
+   later runs.
 
-If a folder is unusable (no doc, unreadable images), do not guess:
-skip it, leave it OUT of processedFolders, and say exactly what is
-missing in the Slack post.
+If the data file fails to parse or the repo state looks wrong, touch
+nothing and report exactly what you found to #newsroom-queue.
 
 ---
 
-## Also update
+## Also update when creating this
 
-- Disable/replace the v1 behavior: no more editing the Drive master
-  copy of pfc-newsroom-data.js, no more DM-only handoff to Mackenzie,
-  no more state files in Drive.
-- Clean up the four `newsroom-queue-state.json` files in the Drive
-  handoff folder (state now lives in this repo).
-- The Drive copy of pfc-newsroom-data.js is retired; the repo is
-  master. Keep the two image-backup zips in Drive — still the only
-  off-Prowly copy of pre-migration images.
+- Delete the v2 routine "PFC Newsroom Queue" from the old account.
+- The Drive folder "PFC Newsroom Handoff" is retired as an intake:
+  tell the team (TEAM-GUIDE.md is the reference), keep the two
+  image-backup zips in Drive — still the only off-Prowly copy of
+  pre-migration images.
+- `queue-state.json` in the repo is retired with the v2 routine; it
+  stays for history but nothing reads it now.

@@ -49,6 +49,20 @@ for r in releases:
         # renderer shows a placeholder; one legacy Prowly release (430026) has no hero
         warnings.append(f"{rid}: no hero image")
 
+    listen = r.get("listen")
+    if listen is not None:
+        if not isinstance(listen, dict):
+            errors.append(f"{rid}: listen must be an object")
+        else:
+            ld = listen.get("releaseDate", "")
+            if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(ld)):
+                errors.append(f"{rid}: listen.releaseDate bad or missing: {ld!r}")
+            st = listen.get("status")
+            if st not in ("pending", "linked", "stalled", "skipped"):
+                errors.append(f"{rid}: listen.status must be pending/linked/stalled/skipped, got {st!r}")
+            if st == "linked" and not listen.get("spotify"):
+                errors.append(f"{rid}: listen.status is linked but no spotify url recorded")
+
     def check_url(u, what):
         if not isinstance(u, str):
             return
