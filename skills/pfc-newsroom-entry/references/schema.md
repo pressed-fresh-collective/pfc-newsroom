@@ -18,6 +18,9 @@ before every push.
   "title": "Artist Name Releases Debut Single 'Song Title'",
   "date": "2026-08-20",
   "lead": "One-sentence summary drawn from the release's own opening.",
+  "artist": "Artist Name",
+  "track": "Song Title",
+  "spotifyArtistId": "33JLx5OttrwiRHAUo8ClvP",
   "hero": "images/2026082001/hero.jpg",
   "listen": {"releaseDate": "2026-09-12", "status": "pending"},
   "contact": {"name": "Dawn Jones", "role": "", "email": "dawn@pressedfreshpr.com", "phone": ""},
@@ -31,6 +34,20 @@ before every push.
   release date). Entries must stay in newest-first order.
 - `lead` — plain text, no HTML. Also repeated as the first block.
 - `hero` — repo-relative path. The file must exist. No base64, ever.
+- `artist` — the performing artist's name as they are credited on
+  streaming, not as the headline phrases it. REQUIRED whenever `listen`
+  is present.
+- `track` — the actual song, EP or album title, exactly as it appears on
+  streaming. REQUIRED whenever `listen` is present. This is the field
+  people forget: `title` is the press release headline. A headline of
+  "When the Anger Becomes the Healing" belongs to a song called "A Small
+  Man's Pride", and searching Spotify for the headline finds nothing.
+- `spotifyArtistId` — the 22-character id from the artist's Spotify
+  profile URL. `open.spotify.com/artist/33JLx5OttrwiRHAUo8ClvP` gives
+  `33JLx5OttrwiRHAUo8ClvP`. Strip any `?si=` parameter. Strongly
+  recommended whenever `listen` is present: it anchors the release-day
+  search to the right artist. Without it the routine searches by name
+  and can land on an unrelated act with a similar name.
 - `listen` — OPTIONAL, see "The listen field" below.
 - `contact` — defaults to Dawn unless the release names someone else.
 

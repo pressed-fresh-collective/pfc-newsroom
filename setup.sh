@@ -1,4 +1,8 @@
 #!/bin/bash
+# HISTORICAL: this was the one-time setup for the original
+# personal-account repo. The repo now lives in the
+# pressed-fresh-collective organization and is already configured.
+# Kept for reference only. Do not run it.
 # One-time GitHub setup. Run AFTER creating an empty public repo named
 # "pfc-newsroom" on github.com (no README, no .gitignore).
 # Usage: ./setup.sh <your-github-username>

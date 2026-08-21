@@ -2,6 +2,7 @@
 """Validate pfc-newsroom-data.js before publishing.
 
 Checks: file parses, ids unique & numeric, dates ISO and newest-first,
+artist/track/spotifyArtistId present where the Listen Now routine needs them,
 every repo-relative image path exists, no base64 data URIs, and flags
 em dashes in releases dated after the Prowly migration (house style).
 
@@ -62,6 +63,30 @@ for r in releases:
                 errors.append(f"{rid}: listen.status must be pending/linked/stalled/skipped, got {st!r}")
             if st == "linked" and not listen.get("spotify"):
                 errors.append(f"{rid}: listen.status is linked but no spotify url recorded")
+
+    # --- artist, track, spotifyArtistId (the Listen Now routine needs these) ---
+    # `title` is the press release headline, not the song name, so the
+    # routine cannot search streaming platforms without `artist` + `track`.
+    artist = r.get("artist")
+    track = r.get("track")
+    sid = r.get("spotifyArtistId")
+
+    if artist is not None and not (isinstance(artist, str) and artist.strip()):
+        errors.append(f"{rid}: artist must be a non-empty string")
+    if track is not None and not (isinstance(track, str) and track.strip()):
+        errors.append(f"{rid}: track must be a non-empty string")
+    if sid is not None and not re.fullmatch(r"[A-Za-z0-9]{22}", str(sid)):
+        errors.append(f"{rid}: spotifyArtistId must be 22 alphanumeric characters, got {sid!r}")
+
+    if listen is not None:
+        if not artist:
+            errors.append(f"{rid}: has a listen field but no artist, so the release-day routine cannot search for it")
+        if not track:
+            errors.append(f"{rid}: has a listen field but no track, and title is a headline not a song name")
+        if not sid:
+            warnings.append(f"{rid}: has a listen field but no spotifyArtistId, so the routine must search blind")
+    elif r.get("date", "") >= MIGRATION_CUTOFF and not artist:
+        warnings.append(f"{rid}: no artist field")
 
     def check_url(u, what):
         if not isinstance(u, str):

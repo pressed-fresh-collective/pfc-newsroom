@@ -38,6 +38,15 @@ this session IS the publish pipeline.
   streaming platforms. This drives the automatic Listen Now step (see
   below). For a performance recap or news item with no streaming
   release, there isn't one; skip the `listen` field entirely.
+- **Artist name** as credited on streaming, for the `artist` field.
+- **The exact track title**, for the `track` field. Take it from the
+  release copy, where it is normally in quotation marks, and never from
+  the headline. If the copy does not state it clearly, ASK. A `listen`
+  entry without a correct `track` guarantees the release-day routine
+  fails, silently, on release morning.
+- **The artist's Spotify profile link**, for `spotifyArtistId`. Most
+  releases already print it in the "Connect with" section, so look there
+  before asking. Record only the 22-character id from the URL.
 
 **Optional (include when available):**
 - Spotify link, Apple Music link, YouTube link — if the music is
@@ -64,6 +73,9 @@ The summary:
 - `lead`: the release's own opening/summary sentence. Never invent
   promotional language.
 - `blocks`: the release body converted block by block, copy verbatim.
+- `artist`, `track`, `spotifyArtistId`: required companions to
+  `listen`. See schema.md. `track` is the song, `title` is the headline,
+  and they are almost never the same string.
 - `listen`: `{"releaseDate":"YYYY-MM-DD","status":"pending"}` when the
   music is not yet live on streaming. The release-day routine watches
   for this, finds the Spotify and Apple Music links on release morning,
