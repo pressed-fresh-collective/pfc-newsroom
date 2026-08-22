@@ -19,7 +19,26 @@ if git diff --cached --quiet; then
   exit 0
 fi
 git commit -m "$MSG"
-git push origin main
+
+# Push what we actually committed, not the local `main` ref. Sessions
+# usually run on a generated `claude/*` branch, and `git push origin
+# main` from there pushes an untouched local main and prints
+# "Everything up-to-date" while the commit never reaches the live site.
+git push origin HEAD:main
+
+# Never trust that silently. Confirm the commit is the remote tip.
+LOCAL="$(git rev-parse HEAD)"
+REMOTE="$(git ls-remote origin main | cut -f1)"
+if [ "$LOCAL" != "$REMOTE" ]; then
+  echo ""
+  echo "FAILED: the commit did not reach main on the remote."
+  echo "  local HEAD:  $LOCAL"
+  echo "  remote main: $REMOTE"
+  echo "The newsroom has NOT changed. Do not report this as published."
+  exit 1
+fi
+
 echo ""
-echo "Pushed. GitHub Pages redeploys in ~1 minute; the live newsroom"
+echo "Pushed and verified. main is now $LOCAL"
+echo "GitHub Pages redeploys in ~1 minute; the live newsroom"
 echo "updates within about 10 minutes (CDN cache)."
